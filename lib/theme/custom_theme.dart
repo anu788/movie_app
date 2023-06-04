@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yolo_movies_app/services/size_config.dart';
 
 // Basic custom theme to predifine required text styles and colors.
 class CustomTheme {
@@ -19,40 +20,35 @@ class CustomTheme {
       );
 
   TextTheme _textTheme(Color seedColor) => TextTheme(
-        headlineLarge: const TextStyle(
-          fontSize: 24,
+        headlineLarge: TextStyle(
+          fontSize: 20.withTextFactor,
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),
         headlineMedium: TextStyle(
-          fontSize: 20,
+          fontSize: 16.withTextFactor,
           fontWeight: FontWeight.bold,
           color: seedColor,
         ),
-        headlineSmall: const TextStyle(
-          fontSize: 16,
+        headlineSmall: TextStyle(
+          fontSize: 14.withTextFactor,
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),
-        displayLarge: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
+        displayLarge: TextStyle(
+          fontSize: 12.withTextFactor,
+          fontWeight: FontWeight.w800,
           color: Colors.white,
         ),
-        displayMedium: const TextStyle(
-          fontSize: 14,
+        displayMedium: TextStyle(
+          fontSize: 12.withTextFactor,
           fontWeight: FontWeight.w500,
           color: Colors.white,
         ),
         displaySmall: TextStyle(
-          fontSize: 12,
+          fontSize: 10.withTextFactor,
           fontWeight: FontWeight.w500,
           color: seedColor,
-        ),
-        bodySmall: const TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.normal,
-          color: Colors.white,
         ),
       );
 }

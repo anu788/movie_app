@@ -23,7 +23,7 @@ class PaginatedListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: SizeConfig.screenHeight / 5,
-      padding: const EdgeInsets.only(left: 12),
+      padding: EdgeInsets.only(left: 12.withWidthFactor),
       child: BlocBuilder<MoviesListBloc, MoviesListState>(
         builder: (_, state) {
           if (state is ErrorMoviesListState) {
@@ -37,9 +37,15 @@ class PaginatedListWidget extends StatelessWidget {
 
           if (state is LoadedMoviesListState) {
             if ((state.errorMessage ?? "").isNotEmpty) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.errorMessage!)),
-              );
+              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      content: Text(
+                    state.errorMessage!,
+                    maxLines: 3,
+                  )),
+                );
+              });
             }
 
             if (state.movies.isEmpty) {
@@ -144,7 +150,7 @@ class _WidgetBuilderState extends State<_WidgetBuilder> {
                   url: widget.movies[index].posterPath,
                 ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8.withHeightFactor),
               Flexible(
                 flex: 1,
                 child: Text(

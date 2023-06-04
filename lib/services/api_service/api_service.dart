@@ -20,7 +20,6 @@ class ApiService {
 
   Future<ApiResponse> get({required String urlPath}) async {
     try {
-      print(urlPath);
       final response = await _client.get(urlPath);
       return _parseResponse(response);
     } catch (e) {

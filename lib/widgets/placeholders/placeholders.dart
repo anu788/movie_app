@@ -18,7 +18,7 @@ class ListItemPlaceholder extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.withHeightFactor),
         Flexible(
           flex: 1,
           child: Container(
@@ -39,7 +39,7 @@ class DetailsPlaceholder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.zero,
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.withTextFactor),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,14 +54,15 @@ class DetailsPlaceholder extends StatelessWidget {
                   flex: 1,
                   child: Container(
                     height: SizeConfig.screenHeight / 6,
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 4.withWidthFactor),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       color: Colors.grey,
                     ),
                   ),
                 ),
-                const SizedBox(width: 20),
+                SizedBox(width: 20.withHeightFactor),
                 Flexible(
                   flex: 3,
                   child: Column(
@@ -72,7 +73,7 @@ class DetailsPlaceholder extends StatelessWidget {
                         height: 12,
                         color: Colors.grey,
                       ),
-                      const SizedBox(height: 10.0),
+                      SizedBox(height: 10.withHeightFactor),
                       Expanded(
                         child: Container(
                           color: Colors.grey,
@@ -84,14 +85,14 @@ class DetailsPlaceholder extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.withHeightFactor),
           Expanded(
             child: Container(
               width: double.infinity,
               color: Colors.grey,
             ),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.withHeightFactor),
           Expanded(
             child: Container(
               width: double.infinity,

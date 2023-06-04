@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yolo_movies_app/models/movie_details.dart';
+import 'package:yolo_movies_app/services/size_config.dart';
 import 'package:yolo_movies_app/view_modules/movie_details/widgets/movie_overview_widget.dart';
 import 'package:yolo_movies_app/widgets/custom_badge.dart';
 import 'package:yolo_movies_app/widgets/network_image.dart';
@@ -64,100 +65,107 @@ class _WidgetBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          // Backdrop image with blurred effect
-          if (imageProvider != null) ...{
-            Positioned.fill(
-              child: ClipRRect(
-                child: ImageFiltered(
-                  imageFilter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-                  child: Container(
-                      decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: imageProvider!,
-                      fit: BoxFit.cover,
-                    ),
-                  )),
+      body: WillPopScope(
+        onWillPop: () {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          return Future.value(true);
+        },
+        child: Stack(
+          children: [
+            // Backdrop image with blurred effect
+            if (imageProvider != null) ...{
+              Positioned.fill(
+                child: ClipRRect(
+                  child: ImageFiltered(
+                    imageFilter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+                    child: Container(
+                        decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: imageProvider!,
+                        fit: BoxFit.cover,
+                      ),
+                    )),
+                  ),
                 ),
               ),
-            ),
-          },
+            },
 
-          // movie details content to be displayed on foreground
-          Positioned.fill(
-            child: Container(
-              margin: EdgeInsets.zero,
-              padding: const EdgeInsets.all(20),
-              color: imageProvider != null
-                  ? Theme.of(context).primaryColor.withOpacity(0.6)
-                  : Colors.grey.shade500,
-              child: SafeArea(
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      // movie Poster, title, tagline and overview
-                      MovieOverviewWidget(movieDetails: movieDetails),
-                      const SizedBox(height: 12),
+            // movie details content to be displayed on foreground
+            Positioned.fill(
+              child: Container(
+                margin: EdgeInsets.zero,
+                padding: EdgeInsets.all(20.withTextFactor),
+                color: imageProvider != null
+                    ? Theme.of(context).primaryColor.withOpacity(0.6)
+                    : Colors.grey.shade500,
+                child: SafeArea(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        // movie Poster, title, tagline and overview
+                        MovieOverviewWidget(movieDetails: movieDetails),
+                        SizedBox(height: 12.withHeightFactor),
 
-                      // movie vote average, release status, runtime, content rating and genres
-                      Wrap(
-                        runSpacing: 12,
-                        spacing: 8,
-                        children: [
-                          CustomBadge(
-                            label: movieDetails.voteRating,
-                            backgroundColor:
-                                Theme.of(context).colorScheme.secondary,
-                          ),
-                          ...List.from(
-                            movieDetails.extraDetails.map(
-                              (e) => CustomBadge(label: e),
+                        // movie vote average, release status, runtime, content rating and genres
+                        Wrap(
+                          runSpacing: 12,
+                          spacing: 8,
+                          children: [
+                            CustomBadge(
+                              label: movieDetails.voteRating,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.secondary,
+                            ),
+                            ...List.from(
+                              movieDetails.extraDetails.map(
+                                (e) => CustomBadge(label: e),
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(height: 12.withHeightFactor),
+
+                        // Play button if movie has a video
+                        if (movieDetails.video) ...{
+                          InkWell(
+                            onTap: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(movieDetails.title)),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
+                              padding: EdgeInsets.all(8.withTextFactor),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(Icons.play_circle_sharp),
+                                  SizedBox(width: 4.withWidthFactor),
+                                  Text(
+                                    "Play Trailer",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displayLarge,
+                                  ),
+                                ],
+                              ),
                             ),
                           )
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-
-                      // Play button if movie has a video
-                      if (movieDetails.video) ...{
-                        InkWell(
-                          onTap: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(movieDetails.title)),
-                            );
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Theme.of(context).colorScheme.secondary,
-                            ),
-                            padding: const EdgeInsets.all(8),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Icon(Icons.play_circle_sharp),
-                                const SizedBox(width: 4),
-                                Text(
-                                  "Play Trailer",
-                                  style:
-                                      Theme.of(context).textTheme.displayLarge,
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      },
-                    ],
+                        },
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

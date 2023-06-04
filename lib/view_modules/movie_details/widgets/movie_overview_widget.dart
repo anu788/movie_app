@@ -1,6 +1,7 @@
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:yolo_movies_app/models/movie_details.dart';
+import 'package:yolo_movies_app/services/size_config.dart';
 import 'package:yolo_movies_app/widgets/network_image.dart';
 
 // Widget to display movie poster, title, tagline and overview_text information.
@@ -24,7 +25,7 @@ class MovieOverviewWidget extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: 12.withWidthFactor),
         Expanded(
           flex: 2,
           child: Column(
@@ -37,27 +38,29 @@ class MovieOverviewWidget extends StatelessWidget {
                 Text(
                   movieDetails.originalTitle,
                   style: Theme.of(context).textTheme.headlineLarge,
+                  maxLines: 2,
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 12.withHeightFactor),
               },
               Text(
                 movieDetails.title,
                 style: Theme.of(context).textTheme.headlineLarge,
                 maxLines: 2,
               ),
-              const SizedBox(height: 4),
+              SizedBox(height: 4.withHeightFactor),
               if ((movieDetails.tagline ?? "").isNotEmpty) ...{
                 Text(
                   movieDetails.tagline!,
+                  maxLines: 2,
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4.withHeightFactor),
               },
               ExpandableText(
                 movieDetails.overview,
                 expandText: 'show more',
                 collapseText: 'show less',
-                maxLines: 6,
+                maxLines: 5,
                 linkStyle: Theme.of(context).textTheme.displayLarge,
                 style: Theme.of(context).textTheme.displayMedium,
               ),

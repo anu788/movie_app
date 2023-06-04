@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yolo_movies_app/services/size_config.dart';
 
 // Widget to show a capsule shaped badge with given label.
 class CustomBadge extends StatelessWidget {
@@ -15,7 +16,10 @@ class CustomBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     if (label == null) return const SizedBox.shrink();
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+      padding: EdgeInsets.symmetric(
+        horizontal: 8.withWidthFactor,
+        vertical: 4.withHeightFactor,
+      ),
       decoration: BoxDecoration(
         color: backgroundColor ?? Colors.grey.shade600,
         borderRadius: BorderRadius.circular(8.0),

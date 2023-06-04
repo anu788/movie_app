@@ -13,6 +13,7 @@ class NetworkImageWidget extends StatelessWidget {
   final Widget Function(ImageProvider?)? imageBuilder;
   final Widget? placeholder;
   final Widget Function(String)? onError;
+  final BoxFit? fit;
 
   const NetworkImageWidget({
     required this.url,
@@ -22,6 +23,7 @@ class NetworkImageWidget extends StatelessWidget {
     this.imageBuilder,
     this.placeholder,
     this.onError,
+    this.fit,
     super.key,
   });
 
@@ -31,7 +33,7 @@ class NetworkImageWidget extends StatelessWidget {
       ImagePathConstants.thumbnail,
       width: width ?? double.infinity,
       height: height ?? double.infinity,
-      fit: BoxFit.cover,
+      fit: fit ?? BoxFit.cover,
     );
   }
 
@@ -48,7 +50,7 @@ class NetworkImageWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(borderRadius ?? 0),
                 image: DecorationImage(
                   image: imageProvider,
-                  fit: BoxFit.cover,
+                  fit: fit ?? BoxFit.cover,
                 ),
               ),
             ),
@@ -65,7 +67,7 @@ class NetworkImageWidget extends StatelessWidget {
             ),
           ),
       errorWidget: (context, url, error) => _errorWidget(error.toString()),
-      fit: BoxFit.cover,
+      fit: fit ?? BoxFit.cover,
       fadeOutDuration: const Duration(milliseconds: 100),
       fadeInDuration: const Duration(milliseconds: 300),
     );

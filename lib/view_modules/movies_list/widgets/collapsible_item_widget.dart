@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yolo_movies_app/constants/custom_extensions.dart';
 import 'package:yolo_movies_app/models/movie_info.dart';
+import 'package:yolo_movies_app/services/size_config.dart';
 import 'package:yolo_movies_app/view_modules/movies_list/bloc/bloc.dart';
 import 'package:yolo_movies_app/view_modules/movies_list/widgets/paginated_list_widget.dart';
 
@@ -33,7 +34,7 @@ class CollapsibleItemWidget extends StatelessWidget {
           final moviesListBloc = context.watch<MoviesListBloc>();
 
           return Padding(
-            padding: const EdgeInsets.only(bottom: 4),
+            padding: EdgeInsets.only(bottom: 4.withHeightFactor),
             child: ExpansionTile(
               title: Text(
                 movieType.name.capitalize(),

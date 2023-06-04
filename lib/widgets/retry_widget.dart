@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yolo_movies_app/services/size_config.dart';
 
 // Widget to Show a retry button with an optional error message
 class RetryWidget extends StatelessWidget {
@@ -19,7 +20,7 @@ class RetryWidget extends StatelessWidget {
         children: <Widget>[
           if (errorMessage != null) ...{
             Text(errorMessage!),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.withHeightFactor),
           },
           ElevatedButton(
             onPressed: onRetry,

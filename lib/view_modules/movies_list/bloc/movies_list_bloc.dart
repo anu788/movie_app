@@ -126,7 +126,7 @@ class MoviesListBloc extends Bloc<MoviesListEvents, MoviesListState> {
     } catch (e) {
       emit(LoadedMoviesListState(
         movies: _moviesList,
-        errorMessage: "Could not fetch new updates : $e",
+        errorMessage: "Could not fetch new updates for latest movies $e",
       ));
     }
   }
@@ -170,7 +170,7 @@ class MoviesListBloc extends Bloc<MoviesListEvents, MoviesListState> {
 
       return true;
     } else {
-      throw "";
+      throw (result as ErrorResponse).errorMessage;
     }
   }
 }
