@@ -106,7 +106,7 @@ class MoviesListBloc extends Bloc<MoviesListEvents, MoviesListState> {
     _pollingTimer?.cancel();
 
     _pollingTimer = Timer.periodic(
-      const Duration(seconds: 5),
+      const Duration(seconds: 30),
       (_) => add(const FetchNewUpdatesEvent()),
     );
   }
